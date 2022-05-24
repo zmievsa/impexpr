@@ -12,12 +12,13 @@ from ideas import import_hook, main_hack
 
 from .token_transformers import transform_source
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 __all__ = ["main"]
 
 
 def add_hook():
     """Creates and automatically adds the import hook in sys.meta_path"""
+    builtins.importlib = importlib  # type: ignore
     hook = import_hook.create_hook(hook_name=__name__, transform_source=transform_source, first=True)
     return hook
 
@@ -25,6 +26,7 @@ def add_hook():
 def parse_argv(argv: T.List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="pysh")
     parser.add_argument("script", help="The script to run", nargs="?", default=None)
+    parser.add_argument("-v", "--version", help="Print the version and exit", action="store_true")
     parser.add_argument("-c", "--compile", help="Compile the script without running", action="store_true")
     parser.add_argument(
         "-b",
@@ -41,9 +43,11 @@ def main(argv: T.Optional[T.List[str]] = None) -> None:
     if argv is None:
         argv = sys.argv[1:]
     args = parse_argv(argv)
-    builtins.importlib = importlib  # type: ignore
 
-    if args.script is None:
+    if args.version:
+        print(__version__)
+        sys.exit(0)
+    elif args.script is None:
         from ideas import console
 
         console.configure(transform_source=transform_source)
