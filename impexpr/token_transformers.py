@@ -12,7 +12,7 @@ def modify_tokens(tokens: List[tokenize.TokenInfo]) -> Generator[Tuple[int, str]
         if imp_expr_started:
             if tkn1.string == ")":
                 imp_expr_started = False
-                import_expr = f'importlib.import_module("{".".join(current_import_elems)}")'
+                import_expr = f'(importlib.import_module("{".".join(current_import_elems)}"))'
                 yield from (t[:2] for t in tokenize.generate_tokens(StringIO(import_expr).readline))
                 current_import_elems.clear()
             elif ignore_next_tkn:
