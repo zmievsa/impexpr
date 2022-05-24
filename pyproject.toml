@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "impexpr"
-version = "0.0.4"
+version = "0.0.5"
 description = "A simple superset of Python with import expressions added in"
 authors = ["Stanislav Zmiev <szmiev2000@gmail.com>"]
 license = "MIT"

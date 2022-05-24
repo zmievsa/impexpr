@@ -12,8 +12,8 @@ from ideas import import_hook, main_hack
 
 from .token_transformers import transform_source
 
-__version__ = "0.0.4"
-__all__ = ["main"]
+__version__ = "0.0.5"
+__all__ = ["main", "add_hook"]
 
 
 def add_hook():
@@ -51,7 +51,11 @@ def main(argv: T.Optional[T.List[str]] = None) -> None:
         from ideas import console
 
         console.configure(transform_source=transform_source)
-        console.start(prompt=">>> ", banner=f"Pysh Console [Python version: {sys.version}]")
+        console.start(
+            prompt=">>> ",
+            banner=f"Pysh Console [Python version: {sys.version}]",
+            locals={"importlib": importlib},
+        )
         exit(0)
     elif not P(args.script).is_file():
         print("Expecting a path to the script", file=sys.stderr)
