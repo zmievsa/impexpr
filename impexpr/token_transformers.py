@@ -1,6 +1,5 @@
-import re
 import tokenize
-from collections import deque, namedtuple
+from collections import deque
 from io import StringIO
 from typing import Any, Generator, List, Tuple
 
@@ -34,14 +33,3 @@ def transform_source(source: str, **kwargs: Any) -> str:
     tokens = list(modify_tokens(tokens))
     source = tokenize.untokenize(tokens)
     return source
-
-
-from rich import print
-
-source = """
-import importlib
-for x in (import itertools).chain([1, 2], [3, 4], [5, 6]):
-    print(x)
-"""
-exec(transform_source(source))
-# print(list(tokenize.generate_tokens(StringIO(source).readline)))

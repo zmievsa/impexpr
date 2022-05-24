@@ -13,7 +13,6 @@ classifiers = [
     "Topic :: Utilities",
 ]
 
-
 [tool.poetry.dependencies]
 python = "^3.7"
 ideas = "^0.0.37"
